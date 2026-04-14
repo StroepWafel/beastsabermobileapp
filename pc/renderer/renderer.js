@@ -16,11 +16,14 @@ function syncFolderPathDisplays() {
   });
 }
 
-const STORAGE_LAN_ALLOW_AUTO = 'beastsaber.lanAllowAutoDownload';
+const STORAGE_LAN_ALLOW_AUTO = 'bslink.lanAllowAutoDownload';
+const STORAGE_LAN_ALLOW_AUTO_OLD = 'beastsaber.lanAllowAutoDownload';
 
-const STORAGE_EXTRACT_ZIPS = 'beastsaber.extractZipsAfterDownload';
+const STORAGE_EXTRACT_ZIPS = 'bslink.extractZipsAfterDownload';
+const STORAGE_EXTRACT_ZIPS_OLD = 'beastsaber.extractZipsAfterDownload';
 
-const STORAGE_DELETE_ZIPS = 'beastsaber.deleteZipsAfterExtract';
+const STORAGE_DELETE_ZIPS = 'bslink.deleteZipsAfterExtract';
+const STORAGE_DELETE_ZIPS_OLD = 'beastsaber.deleteZipsAfterExtract';
 
 
 
@@ -75,18 +78,26 @@ function scheduleSaveSettings() {
 /** One-time migration from older localStorage prefs into settings.json */
 
 function migrateLocalStorageOnce() {
-
-  if (localStorage.getItem('beastsaber.settingsMigrated') === '1') return null;
+  const migrated = localStorage.getItem('bslink.settingsMigrated') === '1';
+  if (migrated) return null;
 
   const patch = {};
+  const lanAuto =
+    localStorage.getItem(STORAGE_LAN_ALLOW_AUTO) ??
+    localStorage.getItem(STORAGE_LAN_ALLOW_AUTO_OLD);
+  const extract =
+    localStorage.getItem(STORAGE_EXTRACT_ZIPS) ??
+    localStorage.getItem(STORAGE_EXTRACT_ZIPS_OLD);
+  const del =
+    localStorage.getItem(STORAGE_DELETE_ZIPS) ??
+    localStorage.getItem(STORAGE_DELETE_ZIPS_OLD);
 
-  if (localStorage.getItem(STORAGE_LAN_ALLOW_AUTO) === '1') patch.lanAllowAutoDownload = true;
+  if (lanAuto === '1') patch.lanAllowAutoDownload = true;
+  if (extract === '1') patch.extractZips = true;
+  if (del === '1') patch.deleteZipsAfterExtract = true;
 
-  if (localStorage.getItem(STORAGE_EXTRACT_ZIPS) === '1') patch.extractZips = true;
-
-  if (localStorage.getItem(STORAGE_DELETE_ZIPS) === '1') patch.deleteZipsAfterExtract = true;
-
-  localStorage.setItem('beastsaber.settingsMigrated', '1');
+  localStorage.setItem('bslink.settingsMigrated', '1');
+  localStorage.removeItem('beastsaber.settingsMigrated');
 
   return Object.keys(patch).length ? patch : null;
 
@@ -142,7 +153,8 @@ function applySettingsToUi(s) {
 
 
 
-const STORAGE_ACTIVE_TAB = 'beastsaber.activeTab';
+const STORAGE_ACTIVE_TAB = 'bslink.activeTab';
+const STORAGE_ACTIVE_TAB_OLD = 'beastsaber.activeTab';
 
 function initTabs() {
   const tabRelay = el('tab-relay');
@@ -182,7 +194,7 @@ function initTabs() {
 
   let saved;
   try {
-    saved = localStorage.getItem(STORAGE_ACTIVE_TAB);
+    saved = localStorage.getItem(STORAGE_ACTIVE_TAB) ?? localStorage.getItem(STORAGE_ACTIVE_TAB_OLD);
   } catch (_) {
     saved = null;
   }

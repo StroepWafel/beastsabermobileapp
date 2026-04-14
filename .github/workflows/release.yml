@@ -32,7 +32,7 @@ jobs:
           cache-dependency-path: pc/package-lock.json
 
       - name: Set package version
-        run: npm pkg set version=${{ inputs.version }} --prefix pc
+        run: npm pkg set version=${{ github.event.inputs.version }} --prefix pc
 
       - name: Install & build NSIS installer
         working-directory: pc
@@ -43,16 +43,18 @@ jobs:
       - name: Verify installer output
         shell: pwsh
         run: |
-          $setup = "pc/dist/BSLink-Setup-${{ inputs.version }}.exe"
+          $v = "${{ github.event.inputs.version }}"
+          $setup = "pc/dist/BSLink-Setup-$v.exe"
+          Get-ChildItem -Path pc/dist -ErrorAction SilentlyContinue | Format-Table -AutoSize
           if (-not (Test-Path -LiteralPath $setup)) {
-            Get-ChildItem pc/dist
-            throw "Expected installer not found: $setup"
+            throw "Expected installer not found: $setup (check artifactName in package.json build.nsis)"
           }
 
       - uses: actions/upload-artifact@v4
         with:
           name: pc-installer
-          path: pc/dist/BSLink-Setup-${{ inputs.version }}.exe
+          path: pc/dist/BSLink-Setup-${{ github.event.inputs.version }}.exe
+          if-no-files-found: error
 
   build-android:
     name: Android (APK)
@@ -83,17 +85,18 @@ jobs:
         working-directory: android
         run: |
           gradle assembleDebug --no-daemon \
-            -PciVersionName=${{ inputs.version }} \
+            -PciVersionName=${{ github.event.inputs.version }} \
             -PciVersionCode=${{ github.run_number }}
 
       - name: Rename APK
         run: |
-          cp android/app/build/outputs/apk/debug/app-debug.apk "BSLink-Android-${{ inputs.version }}.apk"
+          cp android/app/build/outputs/apk/debug/app-debug.apk "BSLink-Android-${{ github.event.inputs.version }}.apk"
 
       - uses: actions/upload-artifact@v4
         with:
           name: android-apk
-          path: BSLink-Android-${{ inputs.version }}.apk
+          path: BSLink-Android-${{ github.event.inputs.version }}.apk
+          if-no-files-found: error
 
   publish:
     name: Create GitHub Release
@@ -112,12 +115,13 @@ jobs:
 
       - uses: softprops/action-gh-release@v2
         with:
-          tag_name: v${{ inputs.version }}
-          name: BSLink ${{ inputs.version }}
+          tag_name: v${{ github.event.inputs.version }}
+          name: BSLink ${{ github.event.inputs.version }}
           draft: false
           generate_release_notes: true
+          fail_on_unmatched_files: true
           files: |
-            assets/BSLink-Setup-${{ inputs.version }}.exe
-            assets/BSLink-Android-${{ inputs.version }}.apk
+            assets/BSLink-Setup-${{ github.event.inputs.version }}.exe
+            assets/BSLink-Android-${{ github.event.inputs.version }}.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
