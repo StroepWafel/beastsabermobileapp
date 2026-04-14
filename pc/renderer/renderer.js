@@ -173,10 +173,13 @@ function initTabs() {
     saved = null;
   }
   const keyToIndex = { relay: 0, receive: 1, import: 2 };
+  /** Default: Internet relay when never set, undefined, or not a known tab id */
   const initial =
-    saved != null && Object.prototype.hasOwnProperty.call(keyToIndex, saved)
-      ? keyToIndex[saved]
-      : 0;
+    saved === undefined || saved === null || saved === ''
+      ? 0
+      : Object.prototype.hasOwnProperty.call(keyToIndex, saved)
+        ? keyToIndex[saved]
+        : 0;
   switchTab(initial);
 
   const tablist = tabRelay.closest('[role="tablist"]');
