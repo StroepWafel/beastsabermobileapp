@@ -21,7 +21,7 @@ object NetworkModule {
         val req = chain.request()
         chain.proceed(
             req.newBuilder()
-                .header("User-Agent", "BeastSaber/1.0 (Android)")
+                .header("User-Agent", "BSLink/1.0 (BeatSaver Android)")
                 .header("Accept", "application/json")
                 .build()
         )

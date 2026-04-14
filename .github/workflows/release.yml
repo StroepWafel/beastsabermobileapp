@@ -1,4 +1,4 @@
-# Manual release: builds Windows PC portable + Android debug APK, uploads to a GitHub Release.
+# Manual release: builds Windows NSIS installer + Android debug APK, uploads to a GitHub Release.
 # Run: Actions → Release → Run workflow → enter version (e.g. 1.2.0).
 
 name: Release
@@ -20,7 +20,7 @@ concurrency:
 
 jobs:
   build-pc:
-    name: PC (Windows portable)
+    name: PC (Windows installer)
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
@@ -34,23 +34,25 @@ jobs:
       - name: Set package version
         run: npm pkg set version=${{ inputs.version }} --prefix pc
 
-      - name: Install & build
+      - name: Install & build NSIS installer
         working-directory: pc
         run: |
           npm ci
-          npm run dist:portable
+          npm run dist:installer
 
-      - name: Stage release filename (no spaces)
+      - name: Verify installer output
         shell: pwsh
         run: |
-          $exe = Get-ChildItem -Path pc/dist -Filter *.exe | Select-Object -First 1
-          if (-not $exe) { throw "No .exe in pc/dist" }
-          Copy-Item -LiteralPath $exe.FullName -Destination "pc/dist/BeastSaber-Downloader-${{ inputs.version }}.exe"
+          $setup = "pc/dist/BSLink-Setup-${{ inputs.version }}.exe"
+          if (-not (Test-Path -LiteralPath $setup)) {
+            Get-ChildItem pc/dist
+            throw "Expected installer not found: $setup"
+          }
 
       - uses: actions/upload-artifact@v4
         with:
-          name: pc-portable
-          path: pc/dist/BeastSaber-Downloader-${{ inputs.version }}.exe
+          name: pc-installer
+          path: pc/dist/BSLink-Setup-${{ inputs.version }}.exe
 
   build-android:
     name: Android (APK)
@@ -86,12 +88,12 @@ jobs:
 
       - name: Rename APK
         run: |
-          cp android/app/build/outputs/apk/debug/app-debug.apk "BeastSaber-Android-${{ inputs.version }}.apk"
+          cp android/app/build/outputs/apk/debug/app-debug.apk "BSLink-Android-${{ inputs.version }}.apk"
 
       - uses: actions/upload-artifact@v4
         with:
           name: android-apk
-          path: BeastSaber-Android-${{ inputs.version }}.apk
+          path: BSLink-Android-${{ inputs.version }}.apk
 
   publish:
     name: Create GitHub Release
@@ -100,7 +102,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: pc-portable
+          name: pc-installer
           path: assets
 
       - uses: actions/download-artifact@v4
@@ -111,11 +113,11 @@ jobs:
       - uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ inputs.version }}
-          name: BeastSaber ${{ inputs.version }}
+          name: BSLink ${{ inputs.version }}
           draft: false
           generate_release_notes: true
           files: |
-            assets/BeastSaber-Downloader-${{ inputs.version }}.exe
-            assets/BeastSaber-Android-${{ inputs.version }}.apk
+            assets/BSLink-Setup-${{ inputs.version }}.exe
+            assets/BSLink-Android-${{ inputs.version }}.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

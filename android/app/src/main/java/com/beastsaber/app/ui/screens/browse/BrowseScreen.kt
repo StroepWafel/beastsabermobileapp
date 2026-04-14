@@ -52,7 +52,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.beastsaber.app.BeastSaberApplication
+import com.beastsaber.app.BSLinkApplication
 import com.beastsaber.app.R
 import com.beastsaber.app.data.model.primaryVersion
 import com.beastsaber.app.data.repo.LatestFeedSort
@@ -69,7 +69,7 @@ fun BrowseScreen(
     audioPreview: AudioPreviewViewModel,
     modifier: Modifier = Modifier
 ) {
-    val app = LocalContext.current.applicationContext as BeastSaberApplication
+    val app = LocalContext.current.applicationContext as BSLinkApplication
     val vm: BrowseViewModel = viewModel(factory = AppViewModelFactory(app))
     val state by vm.state.collectAsState()
     val audioState by audioPreview.state.collectAsState()

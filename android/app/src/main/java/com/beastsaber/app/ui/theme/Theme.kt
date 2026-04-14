@@ -23,7 +23,7 @@ private val LightColors = lightColorScheme(
 )
 
 @Composable
-fun BeastSaberTheme(
+fun BSLinkTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {

@@ -1,5 +1,5 @@
 /**
- * BeastSaber relay: queues map-list JSON from phone until PC long-polls it.
+ * BSLink relay: queues BeatSaver map-list JSON from phone until PC long-polls it.
  * Set PUBLIC_ORIGIN (e.g. https://relay.example.com) for pairing URLs. Use HTTPS in production.
  */
 const crypto = require('crypto');
@@ -55,7 +55,7 @@ app.use(
 );
 
 app.get('/health', (_req, res) => {
-  res.json({ ok: true, app: 'beastsaber-relay' });
+  res.json({ ok: true, app: 'bslink-relay' });
 });
 
 app.post('/v1/sessions', (_req, res) => {
@@ -182,6 +182,6 @@ const server = http.createServer(app);
 server.listen(PORT, '0.0.0.0', () => {
   if (process.env.NODE_ENV !== 'test') {
     // eslint-disable-next-line no-console
-    console.log(`beastsaber-relay listening on ${PORT} (PUBLIC_ORIGIN=${PUBLIC_ORIGIN})`);
+    console.log(`bslink-relay listening on ${PORT} (PUBLIC_ORIGIN=${PUBLIC_ORIGIN})`);
   }
 });

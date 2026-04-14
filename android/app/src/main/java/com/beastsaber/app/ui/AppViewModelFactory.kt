@@ -2,7 +2,7 @@ package com.beastsaber.app.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.beastsaber.app.BeastSaberApplication
+import com.beastsaber.app.BSLinkApplication
 import com.beastsaber.app.data.network.NetworkModule
 import com.beastsaber.app.data.repo.BeatSaverRepository
 import com.beastsaber.app.data.repo.PlaylistRepository
@@ -14,7 +14,7 @@ import com.beastsaber.app.ui.screens.search.SearchViewModel
 import com.beastsaber.app.ui.screens.send.SendToPcViewModel
 
 class AppViewModelFactory(
-    private val application: BeastSaberApplication
+    private val application: BSLinkApplication
 ) : ViewModelProvider.Factory {
 
     private val beatSaver: BeatSaverRepository by lazy {

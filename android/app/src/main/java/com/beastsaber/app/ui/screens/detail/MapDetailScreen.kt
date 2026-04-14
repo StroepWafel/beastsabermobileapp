@@ -44,7 +44,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
-import com.beastsaber.app.BeastSaberApplication
+import com.beastsaber.app.BSLinkApplication
 import com.beastsaber.app.data.model.displaySongName
 import com.beastsaber.app.data.model.mapKeyForViewer
 import com.beastsaber.app.data.model.primaryVersion
@@ -58,7 +58,7 @@ fun MapDetailScreen(
     onBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val app = LocalContext.current.applicationContext as BeastSaberApplication
+    val app = LocalContext.current.applicationContext as BSLinkApplication
     val vm: MapDetailViewModel = viewModel(factory = AppViewModelFactory(app))
     val state by vm.state.collectAsState()
     val snack = remember { SnackbarHostState() }

@@ -45,7 +45,7 @@ class PlaylistViewModel(
             type = "application/json"
             putExtra(Intent.EXTRA_STREAM, uri)
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            putExtra(Intent.EXTRA_SUBJECT, "BeastSaber map list")
+            putExtra(Intent.EXTRA_SUBJECT, "BSLink BeatSaver map list")
         }
     }
 

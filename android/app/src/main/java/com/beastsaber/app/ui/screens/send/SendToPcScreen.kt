@@ -35,7 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.beastsaber.app.BeastSaberApplication
+import com.beastsaber.app.BSLinkApplication
 import com.beastsaber.app.R
 import com.beastsaber.app.ui.AppViewModelFactory
 
@@ -45,7 +45,7 @@ fun SendToPcScreen(
     onBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val app = androidx.compose.ui.platform.LocalContext.current.applicationContext as BeastSaberApplication
+    val app = androidx.compose.ui.platform.LocalContext.current.applicationContext as BSLinkApplication
     val vm: SendToPcViewModel = viewModel(factory = AppViewModelFactory(app))
     val state by vm.state.collectAsState()
     var baseUrl by remember { mutableStateOf("http://192.168.1.10:3847") }
@@ -114,7 +114,7 @@ fun SendToPcScreen(
             }
             Spacer(Modifier.height(16.dp))
             Text(
-                "Or enter the PC base URL and token from BeastSaber Downloader (LAN receiver).",
+                "Or enter the PC base URL and token from BSLink (LAN receiver).",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

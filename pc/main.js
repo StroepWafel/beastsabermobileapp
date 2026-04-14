@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain, dialog, Menu, screen } = require('electron');
 const path = require('path');
+const pkg = require('./package.json');
 
 /** True when running from source (`npm run dev` / `npm start`), false in packaged builds. */
 const isDev = !app.isPackaged;
@@ -56,7 +57,7 @@ const defaultSettings = {
   lanAllowAutoDownload: false,
   relayAllowAutoDownload: false,
   plTitle: 'My list',
-  plAuthor: 'BeastSaber',
+  plAuthor: 'BSLink',
   /** Public base URL of the intermediary relay (HTTPS). Empty in saved settings means use built-in default in renderer. */
   relayUrl: 'https://bsrelay.stroepwafel.au',
   /** @type {{ x: number, y: number, width: number, height: number, isMaximized?: boolean, isFullScreen?: boolean } | null} */
@@ -301,8 +302,8 @@ ipcMain.handle('download-maps', async (_e, payload) => {
 ipcMain.handle('write-bplist', async (_e, payload) => {
   const { outDir, maps, title, author } = payload;
   const playlist = {
-    playlistTitle: title || 'BeastSaber export',
-    playlistAuthor: author || 'BeastSaber PC',
+      playlistTitle: title || 'BSLink export',
+      playlistAuthor: author || 'BSLink PC',
     image: '',
     songs: maps.map((m) => ({
       key: m.key,
@@ -396,7 +397,7 @@ async function startLanServer() {
     });
 
     exp.get('/health', (_req, res) => {
-      res.json({ ok: true, app: 'beastsaber-pc' });
+      res.json({ ok: true, app: 'bslink-pc' });
     });
 
     const server = http.createServer(exp);
@@ -530,6 +531,9 @@ ipcMain.handle('lan-stop', async () => {
 });
 
 app.whenReady().then(() => {
+  if (process.platform === 'win32' && pkg.build?.appId) {
+    app.setAppUserModelId(pkg.build.appId);
+  }
   Menu.setApplicationMenu(isDev ? buildDevMenu() : null);
   createWindow();
   app.on('activate', () => {

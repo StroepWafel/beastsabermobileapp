@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://beastsaber-app.local/schemas/bsaber-map-list.json",
-  "title": "BeastSaber map list export",
+  "$id": "https://bslink.local/schemas/bsaber-map-list.json",
+  "title": "BSLink BeatSaver map list export",
   "type": "object",
   "required": ["format", "version", "exportedAt", "maps"],
   "additionalProperties": false,

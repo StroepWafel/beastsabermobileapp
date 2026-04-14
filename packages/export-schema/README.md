@@ -1,6 +1,6 @@
 # Export format: `bsaber-map-list`
 
-Shared between the BeatSaver Android app and the Windows PC downloader.
+Shared between the BSLink Android app and the Windows PC app (BeatSaver custom maps).
 
 - **MIME**: `application/json` (file extension `.json`).
 - **Root fields**: `format` (literal `bsaber-map-list`), `version` (integer, currently `1`), `exportedAt` (ISO-8601), `maps` (array).

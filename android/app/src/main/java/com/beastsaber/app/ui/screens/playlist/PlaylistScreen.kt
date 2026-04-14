@@ -44,7 +44,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
-import com.beastsaber.app.BeastSaberApplication
+import com.beastsaber.app.BSLinkApplication
 import com.beastsaber.app.R
 import com.beastsaber.app.ui.AppViewModelFactory
 import kotlinx.coroutines.launch
@@ -56,7 +56,7 @@ fun PlaylistScreen(
     onOpenMap: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val app = LocalContext.current.applicationContext as BeastSaberApplication
+    val app = LocalContext.current.applicationContext as BSLinkApplication
     val vm: PlaylistViewModel = viewModel(factory = AppViewModelFactory(app))
     val items by vm.items.collectAsState()
     val context = LocalContext.current

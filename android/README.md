@@ -1,4 +1,4 @@
-# BeatSaver (Android)
+# BSLink (Android — BeatSaver)
 
 Open this folder in Android Studio, or build from the command line with **Java 17+ full JDK** (not a JRE only). The Android Gradle Plugin needs `jlink` (included in a JDK). If you see `jlink.exe does not exist`, install [Eclipse Temurin JDK 17](https://adoptium.net/) and set `JAVA_HOME` to that JDK, or add to `local.properties`:
 

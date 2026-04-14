@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.beastsaber.app.BeastSaberApplication
+import com.beastsaber.app.BSLinkApplication
 import com.beastsaber.app.R
 import com.beastsaber.app.ui.AppViewModelFactory
 import com.beastsaber.app.ui.audio.AudioPreviewViewModel
@@ -34,22 +34,22 @@ import com.beastsaber.app.ui.screens.detail.MapDetailScreen
 import com.beastsaber.app.ui.screens.playlist.PlaylistScreen
 import com.beastsaber.app.ui.screens.search.SearchScreen
 import com.beastsaber.app.ui.screens.send.SendToPcScreen
-import com.beastsaber.app.ui.theme.BeastSaberTheme
+import com.beastsaber.app.ui.theme.BSLinkTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            BeastSaberTheme {
-                BeastSaberNav()
+            BSLinkTheme {
+                BSLinkNav()
             }
         }
     }
 }
 
 @Composable
-private fun BeastSaberNav() {
-    val app = LocalContext.current.applicationContext as BeastSaberApplication
+private fun BSLinkNav() {
+    val app = LocalContext.current.applicationContext as BSLinkApplication
     val activity = LocalContext.current as ComponentActivity
     val audioPreview: AudioPreviewViewModel = viewModel(
         factory = AppViewModelFactory(app),

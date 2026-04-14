@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BeatSaver</string>
+    <string name="app_name">BSLink</string>
     <string name="browse_title">Browse</string>
     <string name="search_title">Search</string>
     <string name="attribution_beatsaver">Map data from BeatSaver (beatsaver.com)</string>
@@ -75,7 +75,7 @@
     <string name="send_to_pc_scan_hint">Point the camera at the QR shown in the PC app after you start the LAN receiver.</string>
     <string name="send_to_pc_auto_download">Start downloading automatically on PC</string>
     <string name="send_to_pc_auto_download_hint">Sends a flag with the list. The PC app downloads ZIPs only if an output folder is already chosen.</string>
-    <string name="send_to_pc_qr_invalid">Could not read that QR. Use the one from BeastSaber Downloader (LAN receiver).</string>
+    <string name="send_to_pc_qr_invalid">Could not read that QR. Use the one from BSLink on PC (LAN receiver).</string>
     <string name="send_to_pc_close_scanner">Close</string>
     <string name="send_to_pc_camera_denied">Camera permission is required to scan the QR code.</string>
     <string name="share_export">Share export</string>

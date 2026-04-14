@@ -1,7 +1,7 @@
 {
-  "name": "beastsaber-relay",
+  "name": "bslink-relay",
   "version": "1.0.0",
-  "description": "Intermediary HTTPS relay for BeastSaber map list JSON (phone to PC over internet)",
+  "description": "BSLink relay — HTTPS queue for BeatSaver map lists (phone → PC)",
   "main": "index.js",
   "type": "commonjs",
   "scripts": {

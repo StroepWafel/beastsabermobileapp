@@ -1,13 +1,14 @@
 {
-  "name": "beastsaber-pc",
+  "name": "bslink-pc",
   "version": "1.0.0",
-  "description": "Import BeastSaber map lists and download ZIPs from BeatSaver",
+  "description": "BSLink — BeatSaver custom maps: browse on your phone, download ZIPs on your PC",
   "main": "main.js",
   "scripts": {
     "dev": "electronmon .",
     "start": "electron .",
     "pack": "electron-builder --win dir",
-    "dist:portable": "electron-builder --win portable"
+    "dist:portable": "electron-builder --win portable",
+    "dist:installer": "electron-builder --win nsis"
   },
   "author": "",
   "license": "MIT",
@@ -25,8 +26,8 @@
     "patterns": ["!dist/**"]
   },
   "build": {
-    "appId": "com.beastsaber.pc",
-    "productName": "BeastSaber Downloader",
+    "appId": "com.bslink.pc",
+    "productName": "BSLink",
     "icon": "build/icon.png",
     "directories": {
       "output": "dist"
@@ -43,6 +44,15 @@
         "portable"
       ],
       "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": "always",
+      "createStartMenuShortcut": "always",
+      "shortcutName": "BSLink",
+      "runAfterFinish": true,
+      "artifactName": "BSLink-Setup-${version}.${ext}"
     }
   }
 }

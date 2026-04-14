@@ -1,4 +1,4 @@
-# BeastSaber relay (intermediary server)
+# BSLink relay (BeatSaver map list intermediary)
 
 Small Node/Express service so the **Android app can POST a map list** while the **PC app long-polls** from another network (no shared LAN required). Map list JSON passes through this server; use **HTTPS** in production and host it yourself if you care about privacy.
 

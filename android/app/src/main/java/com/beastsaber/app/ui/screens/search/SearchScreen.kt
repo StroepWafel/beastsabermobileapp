@@ -58,7 +58,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.beastsaber.app.BeastSaberApplication
+import com.beastsaber.app.BSLinkApplication
 import com.beastsaber.app.R
 import com.beastsaber.app.data.model.primaryVersion
 import com.beastsaber.app.data.repo.SearchSortOrder
@@ -74,7 +74,7 @@ fun SearchScreen(
     audioPreview: AudioPreviewViewModel,
     modifier: Modifier = Modifier
 ) {
-    val app = LocalContext.current.applicationContext as BeastSaberApplication
+    val app = LocalContext.current.applicationContext as BSLinkApplication
     val vm: SearchViewModel = viewModel(factory = AppViewModelFactory(app))
     val state by vm.state.collectAsState()
     val audioState by audioPreview.state.collectAsState()

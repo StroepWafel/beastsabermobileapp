@@ -40,7 +40,7 @@ function collectSettings() {
 
     plTitle: el('plTitle')?.value ?? 'My list',
 
-    plAuthor: el('plAuthor')?.value ?? 'BeastSaber',
+    plAuthor: el('plAuthor')?.value ?? 'BSLink',
 
     relayUrl: el('relayUrl')?.value ?? ''
 
@@ -130,7 +130,7 @@ function applySettingsToUi(s) {
 
   if (el('plTitle')) el('plTitle').value = s.plTitle || 'My list';
 
-  if (el('plAuthor')) el('plAuthor').value = s.plAuthor || 'BeastSaber';
+  if (el('plAuthor')) el('plAuthor').value = s.plAuthor || 'BSLink';
 
   if (el('relayUrl')) el('relayUrl').value = s.relayUrl || 'https://bsrelay.stroepwafel.au';
 
@@ -475,7 +475,7 @@ el('btnBplist').onclick = async () => {
 
     title: el('plTitle').value || 'My list',
 
-    author: el('plAuthor').value || 'BeastSaber'
+    author: el('plAuthor').value || 'BSLink'
 
   });
 
