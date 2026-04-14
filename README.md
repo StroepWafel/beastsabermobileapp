@@ -1,6 +1,6 @@
 # BSLink — BeatSaver maps: phone to PC
 
-## This is a purely vibecoded app i made for the fun of it, it is not guaranteed to work well or at all. it is under the ICCLEIYSIUYA license.
+This is a purely vibecoded app I made for the fun of it, it is not guaranteed to work well or at all. It is under the ICCLEIYSIUYA license.
 
 - **`android/`** — Android app (Kotlin, Jetpack Compose): browse [BeatSaver](https://beatsaver.com/) maps on your phone, preview audio and ArcViewer, curate a list, export JSON or send the list to your PC over LAN or relay.
 - **`pc/`** — Windows desktop app (Electron): receive that list, download map ZIPs, optional `.bplist`, LAN receiver, and optional **internet relay** client (see `relay/`).
