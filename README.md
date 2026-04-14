@@ -1,5 +1,7 @@
 # BeatSaver mobile + PC downloader
 
+## This is a purely vibecoded app i made for the fun of it, it is not guaranteed to work well or at all. it is under the ICCLEIYSIUYA license.
+
 - **`android/`** — Android app (Kotlin, Jetpack Compose): browse [BeatSaver](https://beatsaver.com/) maps, preview audio and ArcViewer, curate a list, export JSON or send over LAN.
 - **`pc/`** — Windows desktop app (Electron): import the list, download map ZIPs, optional `.bplist`, LAN receiver, and optional **internet relay** client (see `relay/`).
 - **`relay/`** — Optional Node server for **Send to PC across different networks** (phone and PC not on the same Wi‑Fi). Deploy with HTTPS; see [relay/README.md](relay/README.md).
