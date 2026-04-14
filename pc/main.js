@@ -31,7 +31,11 @@ function buildDevMenu() {
 const fsSync = require('fs');
 const fs = require('fs/promises');
 
-const windowIconPath = path.join(__dirname, 'build', 'icon.png');
+const windowIconPath = path.join(
+  __dirname,
+  'assets',
+  process.platform === 'win32' ? 'icon.ico' : 'icon.png'
+);
 const http = require('http');
 const express = require('express');
 

@@ -28,7 +28,7 @@
   "build": {
     "appId": "com.bslink.pc",
     "productName": "BSLink",
-    "icon": "build/icon.png",
+    "icon": "assets/icon.ico",
     "directories": {
       "output": "dist"
     },
@@ -36,7 +36,8 @@
       "main.js",
       "preload.js",
       "renderer/**/*",
-      "build/icon.png",
+      "assets/icon.png",
+      "assets/icon.ico",
       "package.json"
     ],
     "win": {
@@ -44,6 +45,7 @@
         "portable",
         "nsis"
       ],
+      "icon": "assets/icon.ico",
       "signAndEditExecutable": false
     },
     "nsis": {
