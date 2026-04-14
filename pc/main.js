@@ -54,6 +54,7 @@ const defaultSettings = {
   extractZips: false,
   deleteZipsAfterExtract: false,
   lanAllowAutoDownload: false,
+  relayAllowAutoDownload: false,
   plTitle: 'My list',
   plAuthor: 'BeastSaber',
   /** Public base URL of the intermediary relay (HTTPS). Empty in saved settings means use built-in default in renderer. */
@@ -381,7 +382,12 @@ async function startLanServer() {
           req.query.autoDownload === 'true' ||
           req.query.autoDownload === 'yes';
         if (mainWindow) {
-          mainWindow.webContents.send('lan-event', { type: 'import', data, autoDownload });
+          mainWindow.webContents.send('lan-event', {
+            type: 'import',
+            data,
+            autoDownload,
+            source: 'lan'
+          });
         }
         res.json({ ok: true, maps: data.maps.length });
       } catch (e) {
@@ -450,7 +456,12 @@ function runRelayPoll(signal) {
         delete copy.autoDownload;
         const data = parseExport(copy);
         if (mainWindow && !mainWindow.isDestroyed()) {
-          mainWindow.webContents.send('lan-event', { type: 'import', data, autoDownload });
+          mainWindow.webContents.send('lan-event', {
+            type: 'import',
+            data,
+            autoDownload,
+            source: 'relay'
+          });
         }
       } catch (e) {
         if (signal.aborted) break;

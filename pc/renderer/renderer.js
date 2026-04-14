@@ -28,6 +28,8 @@ function collectSettings() {
 
     lanAllowAutoDownload: el('lanAllowAutoDownload')?.checked === true,
 
+    relayAllowAutoDownload: el('relayAllowAutoDownload')?.checked === true,
+
     plTitle: el('plTitle')?.value ?? 'My list',
 
     plAuthor: el('plAuthor')?.value ?? 'BeastSaber',
@@ -111,6 +113,10 @@ function applySettingsToUi(s) {
   const lan = el('lanAllowAutoDownload');
 
   if (lan) lan.checked = !!s.lanAllowAutoDownload;
+
+  const relayAuto = el('relayAllowAutoDownload');
+
+  if (relayAuto) relayAuto.checked = !!s.relayAllowAutoDownload;
 
 
 
@@ -227,6 +233,10 @@ function wirePersistListeners() {
 
   if (lan) lan.addEventListener('change', saveSettings);
 
+  const relayAuto = el('relayAllowAutoDownload');
+
+  if (relayAuto) relayAuto.addEventListener('change', saveSettings);
+
 
 
   const pt = el('plTitle');
@@ -335,7 +345,7 @@ function refreshButtons() {
 
 /**
 
- * @param {{ lanInfoIntro?: string }} opts - If set (e.g. LAN auto-download), same extract/delete flags apply and result is shown in lanInfo.
+ * @param {{ lanInfoIntro?: string, phoneInfoTarget?: 'lan' | 'relay' }} opts - If lanInfoIntro set (phone auto-download), result is shown in lanInfo or relayInfo.
 
  */
 
@@ -401,7 +411,9 @@ async function runDownload(opts = {}) {
 
   if (opts.lanInfoIntro != null) {
 
-    el('lanInfo').textContent = `${opts.lanInfoIntro}\n\n${msg}`;
+    const box = opts.phoneInfoTarget === 'relay' ? el('relayInfo') : el('lanInfo');
+
+    if (box) box.textContent = `${opts.lanInfoIntro}\n\n${msg}`;
 
   }
 
@@ -679,45 +691,51 @@ window.bs.onLanEvent((ev) => {
 
   if (ev.type === 'import' && ev.data) {
 
+    const fromRelay = ev.source === 'relay';
+
+    const infoEl = fromRelay ? el('relayInfo') : el('lanInfo');
+
     setSummary(ev.data);
 
     let msg = `Received list from phone. ${ev.data.maps?.length ?? 0} map(s).`;
 
     if (ev.autoDownload) {
 
-      const allowOnPc = el('lanAllowAutoDownload')?.checked === true;
+      const allowOnPc = fromRelay
+        ? el('relayAllowAutoDownload')?.checked === true
+        : el('lanAllowAutoDownload')?.checked === true;
 
       if (outDir && allowOnPc) {
 
         const intro = `Received list from phone. ${ev.data.maps?.length ?? 0} map(s).`;
 
-        el('lanInfo').textContent = `${intro}\nStarting download…`;
+        if (infoEl) infoEl.textContent = `${intro}\nStarting download…`;
 
-        // Same extract/delete checkboxes as manual download (section 3).
-
-        runDownload({ lanInfoIntro: intro });
+        runDownload({ lanInfoIntro: intro, phoneInfoTarget: fromRelay ? 'relay' : 'lan' });
 
       } else if (!outDir) {
 
         msg +=
 
-          '\nAuto-download skipped: choose a download folder first (step 2), then send again or download manually.';
+          '\nAuto-download skipped: choose a download folder first (Receive over LAN tab), then send again or download manually.';
 
-        el('lanInfo').textContent = msg;
+        if (infoEl) infoEl.textContent = msg;
 
       } else if (!allowOnPc) {
 
-        msg +=
+        msg += fromRelay
 
-          '\nAuto-download skipped: enable “Allow automatic downloads when the phone requests it” above (PC safety).';
+          ? '\nAuto-download skipped: enable “Allow automatic downloads when the phone requests it” on the Internet relay tab (PC safety).'
 
-        el('lanInfo').textContent = msg;
+          : '\nAuto-download skipped: enable “Allow automatic downloads when the phone requests it” above (PC safety).';
+
+        if (infoEl) infoEl.textContent = msg;
 
       }
 
-    } else {
+    } else if (infoEl) {
 
-      el('lanInfo').textContent = msg;
+      infoEl.textContent = msg;
 
     }
 

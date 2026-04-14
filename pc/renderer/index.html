@@ -94,6 +94,13 @@
                   <span class="field-label">Relay base URL</span>
                   <input id="relayUrl" type="text" placeholder="https://bsrelay.stroepwafel.au" autocomplete="off" />
                 </label>
+                <label class="checkbox-row">
+                  <input type="checkbox" id="relayAllowAutoDownload" />
+                  <span>Allow automatic downloads when the phone requests it</span>
+                </label>
+                <p class="muted hint-block">
+                  If this stays off, lists still import—but ZIPs never download automatically over the relay, even if the phone enables auto-download.
+                </p>
                 <div class="lan-actions">
                   <button type="button" class="btn btn-primary" id="btnRelayStart">Start relay session</button>
                   <button type="button" class="btn btn-danger-ghost" id="btnRelayStop" disabled>Stop relay</button>
